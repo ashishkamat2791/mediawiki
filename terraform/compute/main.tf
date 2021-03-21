@@ -29,16 +29,7 @@ resource "aws_instance" "mw_instance_web_a" {
 #       private_key = file(var.private_key_path)
 #     }
 #   }
-#   provisioner "local-exec" {
-#     command = <<EOF
-#               ANSIBLE_HOST_KEY_CHECKING=False \
-#               ansible-playbook \
-#               -i '${self.public_ip},' \
-#               -u ubuntu \
-#               --private-key ${var.private_key_path}  \
-#               ../ansible_templates/mediawiki.yaml
-#              EOF
-#   }
+
   tags = {
     Name    = "mw_instance_web_a"
     Project = "mediawiki"
@@ -61,16 +52,7 @@ resource "aws_instance" "mw_instance_web_b" {
   #     private_key = file(var.private_key_path)
   #   }
   # }
-  # provisioner "local-exec" {
-  #   command = <<EOF
-  #             ANSIBLE_HOST_KEY_CHECKING=False \
-  #             ansible-playbook \
-  #             -i '${self.public_ip},' \
-  #             -u ubuntu \
-  #             --private-key ${var.private_key_path}  \
-  #             ../ansible_templates/mediawiki.yaml
-  #            EOF
-  # }
+
   tags = {
     Name    = "mw_instance_web_b"
     Project = "mediawiki"
@@ -138,19 +120,19 @@ EOD
              EOF
   }
  # back-end
-  #     provisioner "local-exec" {
-  #   command = <<EOF
-  #             ANSIBLE_HOST_KEY_CHECKING=False \
-  #             ansible-playbook \
-  #             -i ../aws_hosts \
-  #             --ssh-common-args ' \
-  #             -o ProxyCommand="ssh -A -W %h:%p -q ubuntu@${aws_instance.mw_instance_web_a.public_ip} \
-  #                  -i ${var.private_key_path}"' \
-  #             -u ubuntu \
-  #             --private-key ${var.private_key_path}  \
-  #             ../ansible_templates/mysql.yaml
-  #            EOF
-  # }
+      provisioner "local-exec" {
+    command = <<EOF
+              ANSIBLE_HOST_KEY_CHECKING=False \
+              ansible-playbook \
+              -i ../aws_hosts \
+              --ssh-common-args ' \
+              -o ProxyCommand="ssh -A -W %h:%p -q ubuntu@${aws_instance.mw_instance_web_a.public_ip} \
+                   -i ${var.private_key_path}"' \
+              -u ubuntu \
+              --private-key ${var.private_key_path}  \
+              ../ansible_templates/mysql.yaml
+             EOF
+  }
 
   listener {
     instance_port     = 80

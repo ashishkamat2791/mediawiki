@@ -1,47 +1,47 @@
-# - hosts: mysql-servers
-#   become: yes
-#   become_user: root
-#   become_method: sudo
-#   #remote_user: ubuntu
+- hosts: mysql-servers
+  become: yes
+  become_user: root
+  become_method: sudo
+  #remote_user: ubuntu
   
-#   handlers:
-#   - name: clean-up sql.sh
-#     file:
-#       path: "/tmp/sql.sh"
-#       state: absent
-#   - name: restart mysql
-#     service:
-#       name: mysql
-#       state: restarted
+  handlers:
+  - name: clean-up sql.sh
+    file:
+      path: "/tmp/sql.sh"
+      state: absent
+  - name: restart mysql
+    service:
+      name: mysql
+      state: restarted
 
-#   tasks:
-#   - name: apt update and upgrade
-#     shell: apt -y update && apt -y upgrade 
-#   - name: install apt packages for database
-#     apt:
-#       name: ['python3-pymysql','mysql-server']
-#       state: present
-#       update_cache: yes
-#       cache_valid_time: 3600
+  tasks:
+  - name: apt update and upgrade
+    shell: apt -y update && apt -y upgrade 
+  - name: install apt packages for database
+    apt:
+      name: ['python3-pymysql','mysql-server']
+      state: present
+      update_cache: yes
+      cache_valid_time: 3600
     
-#   - name: set mysql root password when server type is database
-#     shell: >-
-#       echo "mysql-server mysql-server/root_password password {{ mysql_root_password }}" | sudo debconf-set-selections &&
-#       echo "mysql-server mysql-server/root_password_again password {{ mysql_root_password }}" | sudo debconf-set-selections
-#    # when: server_type == "database"
-#   - name: tranform sql setup template
-#     template:
-#       dest: /tmp/sql.sh
-#       src: ../ansible_templates/sql.sh.j2
-#       mode: 0555
+  - name: set mysql root password when server type is database
+    shell: >-
+      echo "mysql-server mysql-server/root_password password {{ mysql_root_password }}" | sudo debconf-set-selections &&
+      echo "mysql-server mysql-server/root_password_again password {{ mysql_root_password }}" | sudo debconf-set-selections
+   # when: server_type == "database"
+  - name: tranform sql setup template
+    template:
+      dest: /tmp/sql.sh
+      src: ../ansible_templates/sql.sh.j2
+      mode: 0555
 
-#   - name: execute sql setup
-#     shell: /tmp/sql.sh
+  - name: execute sql setup
+    shell: /tmp/sql.sh
 
-#   - name: modify mysql.conf to allow access to web server
-#     shell: sed -i 's/bind-address/#bind-address/g' /etc/mysql/mysql.conf.d/mysqld.cnf
-#     notify:
-#       - restart mysql
-#       - clean-up sql.sh
+  - name: modify mysql.conf to allow access to web server
+    shell: sed -i 's/bind-address/#bind-address/g' /etc/mysql/mysql.conf.d/mysqld.cnf
+    notify:
+      - restart mysql
+      - clean-up sql.sh
 
     
