@@ -1,0 +1,651 @@
+[0m[1mRefreshing Terraform state in-memory prior to plan...[0m
+The refreshed state will be used to calculate this plan, but will not be
+persisted to local or remote state storage.
+[0m
+[0m[1mmodule.compute.data.aws_availability_zones.data_az: Refreshing state...[0m
+[0m[1mmodule.network.data.aws_availability_zones.data_az: Refreshing state...[0m
+
+------------------------------------------------------------------------
+
+An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
+  [32m+[0m create
+[0m
+Terraform will perform the following actions:
+
+[1m  # module.compute.aws_elb.mw_elb[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_elb" "mw_elb" {
+      [32m+[0m [0m[1m[0marn[0m[0m                         = (known after apply)
+      [32m+[0m [0m[1m[0mavailability_zones[0m[0m          = (known after apply)
+      [32m+[0m [0m[1m[0mconnection_draining[0m[0m         = true
+      [32m+[0m [0m[1m[0mconnection_draining_timeout[0m[0m = 300
+      [32m+[0m [0m[1m[0mcross_zone_load_balancing[0m[0m   = true
+      [32m+[0m [0m[1m[0mdns_name[0m[0m                    = (known after apply)
+      [32m+[0m [0m[1m[0mid[0m[0m                          = (known after apply)
+      [32m+[0m [0m[1m[0midle_timeout[0m[0m                = 300
+      [32m+[0m [0m[1m[0minstances[0m[0m                   = (known after apply)
+      [32m+[0m [0m[1m[0minternal[0m[0m                    = (known after apply)
+      [32m+[0m [0m[1m[0mname[0m[0m                        = "media-wiki-elb"
+      [32m+[0m [0m[1m[0msecurity_groups[0m[0m             = (known after apply)
+      [32m+[0m [0m[1m[0msource_security_group[0m[0m       = (known after apply)
+      [32m+[0m [0m[1m[0msource_security_group_id[0m[0m    = (known after apply)
+      [32m+[0m [0m[1m[0msubnets[0m[0m                     = (known after apply)
+      [32m+[0m [0m[1m[0mtags[0m[0m                        = {
+          [32m+[0m [0m"Name"    = "mw_elb"
+          [32m+[0m [0m"Project" = "mediawiki"
+        }
+      [32m+[0m [0m[1m[0mzone_id[0m[0m                     = (known after apply)
+
+      [32m+[0m [0mhealth_check {
+          [32m+[0m [0m[1m[0mhealthy_threshold[0m[0m   = 2
+          [32m+[0m [0m[1m[0minterval[0m[0m            = 30
+          [32m+[0m [0m[1m[0mtarget[0m[0m              = "TCP:80"
+          [32m+[0m [0m[1m[0mtimeout[0m[0m             = 3
+          [32m+[0m [0m[1m[0munhealthy_threshold[0m[0m = 3
+        }
+
+      [32m+[0m [0mlistener {
+          [32m+[0m [0m[1m[0minstance_port[0m[0m     = 80
+          [32m+[0m [0m[1m[0minstance_protocol[0m[0m = "http"
+          [32m+[0m [0m[1m[0mlb_port[0m[0m           = 80
+          [32m+[0m [0m[1m[0mlb_protocol[0m[0m       = "http"
+        }
+    }
+
+[1m  # module.compute.aws_instance.mw_instance_db[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_instance" "mw_instance_db" {
+      [32m+[0m [0m[1m[0mami[0m[0m                          = "ami-042e8287309f5df03"
+      [32m+[0m [0m[1m[0marn[0m[0m                          = (known after apply)
+      [32m+[0m [0m[1m[0massociate_public_ip_address[0m[0m  = (known after apply)
+      [32m+[0m [0m[1m[0mavailability_zone[0m[0m            = (known after apply)
+      [32m+[0m [0m[1m[0mcpu_core_count[0m[0m               = (known after apply)
+      [32m+[0m [0m[1m[0mcpu_threads_per_core[0m[0m         = (known after apply)
+      [32m+[0m [0m[1m[0mget_password_data[0m[0m            = false
+      [32m+[0m [0m[1m[0mhost_id[0m[0m                      = (known after apply)
+      [32m+[0m [0m[1m[0mid[0m[0m                           = (known after apply)
+      [32m+[0m [0m[1m[0minstance_state[0m[0m               = (known after apply)
+      [32m+[0m [0m[1m[0minstance_type[0m[0m                = "t2.micro"
+      [32m+[0m [0m[1m[0mipv6_address_count[0m[0m           = (known after apply)
+      [32m+[0m [0m[1m[0mipv6_addresses[0m[0m               = (known after apply)
+      [32m+[0m [0m[1m[0mkey_name[0m[0m                     = (known after apply)
+      [32m+[0m [0m[1m[0moutpost_arn[0m[0m                  = (known after apply)
+      [32m+[0m [0m[1m[0mpassword_data[0m[0m                = (known after apply)
+      [32m+[0m [0m[1m[0mplacement_group[0m[0m              = (known after apply)
+      [32m+[0m [0m[1m[0mprimary_network_interface_id[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0mprivate_dns[0m[0m                  = (known after apply)
+      [32m+[0m [0m[1m[0mprivate_ip[0m[0m                   = (known after apply)
+      [32m+[0m [0m[1m[0mpublic_dns[0m[0m                   = (known after apply)
+      [32m+[0m [0m[1m[0mpublic_ip[0m[0m                    = (known after apply)
+      [32m+[0m [0m[1m[0msecondary_private_ips[0m[0m        = (known after apply)
+      [32m+[0m [0m[1m[0msecurity_groups[0m[0m              = (known after apply)
+      [32m+[0m [0m[1m[0msource_dest_check[0m[0m            = true
+      [32m+[0m [0m[1m[0msubnet_id[0m[0m                    = (known after apply)
+      [32m+[0m [0m[1m[0mtags[0m[0m                         = {
+          [32m+[0m [0m"Name"    = "mw_instance_db"
+          [32m+[0m [0m"Project" = "mediawiki"
+        }
+      [32m+[0m [0m[1m[0mtenancy[0m[0m                      = (known after apply)
+      [32m+[0m [0m[1m[0mvpc_security_group_ids[0m[0m       = (known after apply)
+
+      [32m+[0m [0mebs_block_device {
+          [32m+[0m [0m[1m[0mdelete_on_termination[0m[0m = (known after apply)
+          [32m+[0m [0m[1m[0mdevice_name[0m[0m           = (known after apply)
+          [32m+[0m [0m[1m[0mencrypted[0m[0m             = (known after apply)
+          [32m+[0m [0m[1m[0miops[0m[0m                  = (known after apply)
+          [32m+[0m [0m[1m[0mkms_key_id[0m[0m            = (known after apply)
+          [32m+[0m [0m[1m[0msnapshot_id[0m[0m           = (known after apply)
+          [32m+[0m [0m[1m[0mtags[0m[0m                  = (known after apply)
+          [32m+[0m [0m[1m[0mthroughput[0m[0m            = (known after apply)
+          [32m+[0m [0m[1m[0mvolume_id[0m[0m             = (known after apply)
+          [32m+[0m [0m[1m[0mvolume_size[0m[0m           = (known after apply)
+          [32m+[0m [0m[1m[0mvolume_type[0m[0m           = (known after apply)
+        }
+
+      [32m+[0m [0menclave_options {
+          [32m+[0m [0m[1m[0menabled[0m[0m = (known after apply)
+        }
+
+      [32m+[0m [0mephemeral_block_device {
+          [32m+[0m [0m[1m[0mdevice_name[0m[0m  = (known after apply)
+          [32m+[0m [0m[1m[0mno_device[0m[0m    = (known after apply)
+          [32m+[0m [0m[1m[0mvirtual_name[0m[0m = (known after apply)
+        }
+
+      [32m+[0m [0mmetadata_options {
+          [32m+[0m [0m[1m[0mhttp_endpoint[0m[0m               = (known after apply)
+          [32m+[0m [0m[1m[0mhttp_put_response_hop_limit[0m[0m = (known after apply)
+          [32m+[0m [0m[1m[0mhttp_tokens[0m[0m                 = (known after apply)
+        }
+
+      [32m+[0m [0mnetwork_interface {
+          [32m+[0m [0m[1m[0mdelete_on_termination[0m[0m = (known after apply)
+          [32m+[0m [0m[1m[0mdevice_index[0m[0m          = (known after apply)
+          [32m+[0m [0m[1m[0mnetwork_interface_id[0m[0m  = (known after apply)
+        }
+
+      [32m+[0m [0mroot_block_device {
+          [32m+[0m [0m[1m[0mdelete_on_termination[0m[0m = (known after apply)
+          [32m+[0m [0m[1m[0mdevice_name[0m[0m           = (known after apply)
+          [32m+[0m [0m[1m[0mencrypted[0m[0m             = (known after apply)
+          [32m+[0m [0m[1m[0miops[0m[0m                  = (known after apply)
+          [32m+[0m [0m[1m[0mkms_key_id[0m[0m            = (known after apply)
+          [32m+[0m [0m[1m[0mtags[0m[0m                  = (known after apply)
+          [32m+[0m [0m[1m[0mthroughput[0m[0m            = (known after apply)
+          [32m+[0m [0m[1m[0mvolume_id[0m[0m             = (known after apply)
+          [32m+[0m [0m[1m[0mvolume_size[0m[0m           = (known after apply)
+          [32m+[0m [0m[1m[0mvolume_type[0m[0m           = (known after apply)
+        }
+    }
+
+[1m  # module.compute.aws_instance.mw_instance_web_a[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_instance" "mw_instance_web_a" {
+      [32m+[0m [0m[1m[0mami[0m[0m                          = "ami-042e8287309f5df03"
+      [32m+[0m [0m[1m[0marn[0m[0m                          = (known after apply)
+      [32m+[0m [0m[1m[0massociate_public_ip_address[0m[0m  = (known after apply)
+      [32m+[0m [0m[1m[0mavailability_zone[0m[0m            = (known after apply)
+      [32m+[0m [0m[1m[0mcpu_core_count[0m[0m               = (known after apply)
+      [32m+[0m [0m[1m[0mcpu_threads_per_core[0m[0m         = (known after apply)
+      [32m+[0m [0m[1m[0mget_password_data[0m[0m            = false
+      [32m+[0m [0m[1m[0mhost_id[0m[0m                      = (known after apply)
+      [32m+[0m [0m[1m[0mid[0m[0m                           = (known after apply)
+      [32m+[0m [0m[1m[0minstance_state[0m[0m               = (known after apply)
+      [32m+[0m [0m[1m[0minstance_type[0m[0m                = "t2.micro"
+      [32m+[0m [0m[1m[0mipv6_address_count[0m[0m           = (known after apply)
+      [32m+[0m [0m[1m[0mipv6_addresses[0m[0m               = (known after apply)
+      [32m+[0m [0m[1m[0mkey_name[0m[0m                     = (known after apply)
+      [32m+[0m [0m[1m[0moutpost_arn[0m[0m                  = (known after apply)
+      [32m+[0m [0m[1m[0mpassword_data[0m[0m                = (known after apply)
+      [32m+[0m [0m[1m[0mplacement_group[0m[0m              = (known after apply)
+      [32m+[0m [0m[1m[0mprimary_network_interface_id[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0mprivate_dns[0m[0m                  = (known after apply)
+      [32m+[0m [0m[1m[0mprivate_ip[0m[0m                   = (known after apply)
+      [32m+[0m [0m[1m[0mpublic_dns[0m[0m                   = (known after apply)
+      [32m+[0m [0m[1m[0mpublic_ip[0m[0m                    = (known after apply)
+      [32m+[0m [0m[1m[0msecondary_private_ips[0m[0m        = (known after apply)
+      [32m+[0m [0m[1m[0msecurity_groups[0m[0m              = (known after apply)
+      [32m+[0m [0m[1m[0msource_dest_check[0m[0m            = true
+      [32m+[0m [0m[1m[0msubnet_id[0m[0m                    = (known after apply)
+      [32m+[0m [0m[1m[0mtags[0m[0m                         = {
+          [32m+[0m [0m"Name"    = "mw_instance_web_a"
+          [32m+[0m [0m"Project" = "mediawiki"
+        }
+      [32m+[0m [0m[1m[0mtenancy[0m[0m                      = (known after apply)
+      [32m+[0m [0m[1m[0mvpc_security_group_ids[0m[0m       = (known after apply)
+
+      [32m+[0m [0mebs_block_device {
+          [32m+[0m [0m[1m[0mdelete_on_termination[0m[0m = (known after apply)
+          [32m+[0m [0m[1m[0mdevice_name[0m[0m           = (known after apply)
+          [32m+[0m [0m[1m[0mencrypted[0m[0m             = (known after apply)
+          [32m+[0m [0m[1m[0miops[0m[0m                  = (known after apply)
+          [32m+[0m [0m[1m[0mkms_key_id[0m[0m            = (known after apply)
+          [32m+[0m [0m[1m[0msnapshot_id[0m[0m           = (known after apply)
+          [32m+[0m [0m[1m[0mtags[0m[0m                  = (known after apply)
+          [32m+[0m [0m[1m[0mthroughput[0m[0m            = (known after apply)
+          [32m+[0m [0m[1m[0mvolume_id[0m[0m             = (known after apply)
+          [32m+[0m [0m[1m[0mvolume_size[0m[0m           = (known after apply)
+          [32m+[0m [0m[1m[0mvolume_type[0m[0m           = (known after apply)
+        }
+
+      [32m+[0m [0menclave_options {
+          [32m+[0m [0m[1m[0menabled[0m[0m = (known after apply)
+        }
+
+      [32m+[0m [0mephemeral_block_device {
+          [32m+[0m [0m[1m[0mdevice_name[0m[0m  = (known after apply)
+          [32m+[0m [0m[1m[0mno_device[0m[0m    = (known after apply)
+          [32m+[0m [0m[1m[0mvirtual_name[0m[0m = (known after apply)
+        }
+
+      [32m+[0m [0mmetadata_options {
+          [32m+[0m [0m[1m[0mhttp_endpoint[0m[0m               = (known after apply)
+          [32m+[0m [0m[1m[0mhttp_put_response_hop_limit[0m[0m = (known after apply)
+          [32m+[0m [0m[1m[0mhttp_tokens[0m[0m                 = (known after apply)
+        }
+
+      [32m+[0m [0mnetwork_interface {
+          [32m+[0m [0m[1m[0mdelete_on_termination[0m[0m = (known after apply)
+          [32m+[0m [0m[1m[0mdevice_index[0m[0m          = (known after apply)
+          [32m+[0m [0m[1m[0mnetwork_interface_id[0m[0m  = (known after apply)
+        }
+
+      [32m+[0m [0mroot_block_device {
+          [32m+[0m [0m[1m[0mdelete_on_termination[0m[0m = (known after apply)
+          [32m+[0m [0m[1m[0mdevice_name[0m[0m           = (known after apply)
+          [32m+[0m [0m[1m[0mencrypted[0m[0m             = (known after apply)
+          [32m+[0m [0m[1m[0miops[0m[0m                  = (known after apply)
+          [32m+[0m [0m[1m[0mkms_key_id[0m[0m            = (known after apply)
+          [32m+[0m [0m[1m[0mtags[0m[0m                  = (known after apply)
+          [32m+[0m [0m[1m[0mthroughput[0m[0m            = (known after apply)
+          [32m+[0m [0m[1m[0mvolume_id[0m[0m             = (known after apply)
+          [32m+[0m [0m[1m[0mvolume_size[0m[0m           = (known after apply)
+          [32m+[0m [0m[1m[0mvolume_type[0m[0m           = (known after apply)
+        }
+    }
+
+[1m  # module.compute.aws_instance.mw_instance_web_b[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_instance" "mw_instance_web_b" {
+      [32m+[0m [0m[1m[0mami[0m[0m                          = "ami-042e8287309f5df03"
+      [32m+[0m [0m[1m[0marn[0m[0m                          = (known after apply)
+      [32m+[0m [0m[1m[0massociate_public_ip_address[0m[0m  = (known after apply)
+      [32m+[0m [0m[1m[0mavailability_zone[0m[0m            = (known after apply)
+      [32m+[0m [0m[1m[0mcpu_core_count[0m[0m               = (known after apply)
+      [32m+[0m [0m[1m[0mcpu_threads_per_core[0m[0m         = (known after apply)
+      [32m+[0m [0m[1m[0mget_password_data[0m[0m            = false
+      [32m+[0m [0m[1m[0mhost_id[0m[0m                      = (known after apply)
+      [32m+[0m [0m[1m[0mid[0m[0m                           = (known after apply)
+      [32m+[0m [0m[1m[0minstance_state[0m[0m               = (known after apply)
+      [32m+[0m [0m[1m[0minstance_type[0m[0m                = "t2.micro"
+      [32m+[0m [0m[1m[0mipv6_address_count[0m[0m           = (known after apply)
+      [32m+[0m [0m[1m[0mipv6_addresses[0m[0m               = (known after apply)
+      [32m+[0m [0m[1m[0mkey_name[0m[0m                     = (known after apply)
+      [32m+[0m [0m[1m[0moutpost_arn[0m[0m                  = (known after apply)
+      [32m+[0m [0m[1m[0mpassword_data[0m[0m                = (known after apply)
+      [32m+[0m [0m[1m[0mplacement_group[0m[0m              = (known after apply)
+      [32m+[0m [0m[1m[0mprimary_network_interface_id[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0mprivate_dns[0m[0m                  = (known after apply)
+      [32m+[0m [0m[1m[0mprivate_ip[0m[0m                   = (known after apply)
+      [32m+[0m [0m[1m[0mpublic_dns[0m[0m                   = (known after apply)
+      [32m+[0m [0m[1m[0mpublic_ip[0m[0m                    = (known after apply)
+      [32m+[0m [0m[1m[0msecondary_private_ips[0m[0m        = (known after apply)
+      [32m+[0m [0m[1m[0msecurity_groups[0m[0m              = (known after apply)
+      [32m+[0m [0m[1m[0msource_dest_check[0m[0m            = true
+      [32m+[0m [0m[1m[0msubnet_id[0m[0m                    = (known after apply)
+      [32m+[0m [0m[1m[0mtags[0m[0m                         = {
+          [32m+[0m [0m"Name"    = "mw_instance_web_b"
+          [32m+[0m [0m"Project" = "mediawiki"
+        }
+      [32m+[0m [0m[1m[0mtenancy[0m[0m                      = (known after apply)
+      [32m+[0m [0m[1m[0mvpc_security_group_ids[0m[0m       = (known after apply)
+
+      [32m+[0m [0mebs_block_device {
+          [32m+[0m [0m[1m[0mdelete_on_termination[0m[0m = (known after apply)
+          [32m+[0m [0m[1m[0mdevice_name[0m[0m           = (known after apply)
+          [32m+[0m [0m[1m[0mencrypted[0m[0m             = (known after apply)
+          [32m+[0m [0m[1m[0miops[0m[0m                  = (known after apply)
+          [32m+[0m [0m[1m[0mkms_key_id[0m[0m            = (known after apply)
+          [32m+[0m [0m[1m[0msnapshot_id[0m[0m           = (known after apply)
+          [32m+[0m [0m[1m[0mtags[0m[0m                  = (known after apply)
+          [32m+[0m [0m[1m[0mthroughput[0m[0m            = (known after apply)
+          [32m+[0m [0m[1m[0mvolume_id[0m[0m             = (known after apply)
+          [32m+[0m [0m[1m[0mvolume_size[0m[0m           = (known after apply)
+          [32m+[0m [0m[1m[0mvolume_type[0m[0m           = (known after apply)
+        }
+
+      [32m+[0m [0menclave_options {
+          [32m+[0m [0m[1m[0menabled[0m[0m = (known after apply)
+        }
+
+      [32m+[0m [0mephemeral_block_device {
+          [32m+[0m [0m[1m[0mdevice_name[0m[0m  = (known after apply)
+          [32m+[0m [0m[1m[0mno_device[0m[0m    = (known after apply)
+          [32m+[0m [0m[1m[0mvirtual_name[0m[0m = (known after apply)
+        }
+
+      [32m+[0m [0mmetadata_options {
+          [32m+[0m [0m[1m[0mhttp_endpoint[0m[0m               = (known after apply)
+          [32m+[0m [0m[1m[0mhttp_put_response_hop_limit[0m[0m = (known after apply)
+          [32m+[0m [0m[1m[0mhttp_tokens[0m[0m                 = (known after apply)
+        }
+
+      [32m+[0m [0mnetwork_interface {
+          [32m+[0m [0m[1m[0mdelete_on_termination[0m[0m = (known after apply)
+          [32m+[0m [0m[1m[0mdevice_index[0m[0m          = (known after apply)
+          [32m+[0m [0m[1m[0mnetwork_interface_id[0m[0m  = (known after apply)
+        }
+
+      [32m+[0m [0mroot_block_device {
+          [32m+[0m [0m[1m[0mdelete_on_termination[0m[0m = (known after apply)
+          [32m+[0m [0m[1m[0mdevice_name[0m[0m           = (known after apply)
+          [32m+[0m [0m[1m[0mencrypted[0m[0m             = (known after apply)
+          [32m+[0m [0m[1m[0miops[0m[0m                  = (known after apply)
+          [32m+[0m [0m[1m[0mkms_key_id[0m[0m            = (known after apply)
+          [32m+[0m [0m[1m[0mtags[0m[0m                  = (known after apply)
+          [32m+[0m [0m[1m[0mthroughput[0m[0m            = (known after apply)
+          [32m+[0m [0m[1m[0mvolume_id[0m[0m             = (known after apply)
+          [32m+[0m [0m[1m[0mvolume_size[0m[0m           = (known after apply)
+          [32m+[0m [0m[1m[0mvolume_type[0m[0m           = (known after apply)
+        }
+    }
+
+[1m  # module.compute.aws_key_pair.mw_key_pair[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_key_pair" "mw_key_pair" {
+      [32m+[0m [0m[1m[0marn[0m[0m         = (known after apply)
+      [32m+[0m [0m[1m[0mfingerprint[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0mid[0m[0m          = (known after apply)
+      [32m+[0m [0m[1m[0mkey_name[0m[0m    = "mediawiki"
+      [32m+[0m [0m[1m[0mkey_pair_id[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0mpublic_key[0m[0m  = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDU85v6OxLeQV/bNZjV0Oyg/+O4DTnRruhcnK3XPrs/U/Y5Hd+u/kDp7QGRgLqZaC9ZznwDKx+X9oqiSnhgwOwdKM2Htke+QiktFBzjnqAXFAZo79NE9vjWXFReBj/cSiHHUK4TJOROsjpZFK+KiZIH2L8FOjfFHTF3w8cUETMU+6+WYV4QiYYK5pDKTNMn97ymVEY/wz4h6nXDtXWknkD8u4jjJa5yHfJY52+/LSy5+cBY2DrliEDWWEzS+iDSbaiweI4CGvZDWwBD6dssxNAmCz4Z/u2yH0GkPVYZSx0a1S2jDabthh3jgybdywVLRkiOZGJZQmYGzlEzWj3zX+hHDKYqeLxRRS9xdQAb1gmZaRg1SHR2HkGwAPisq0KXPTeUCj1Rwr9CUzNzYUBRR4DvaA9ACKTG3D+qfzR3rLlWms0dpzpg6FKpH8zO94MV2lKwQUhSs2BRXCxnObVsHZEnfMynGqGiwR3Z6Ld+BL+1w5/f62kfqGpjlk3jO016XdE= askamat@askamat.ad.here.com"
+    }
+
+[1m  # module.compute.aws_lb_cookie_stickiness_policy.mw_lb_policy[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_lb_cookie_stickiness_policy" "mw_lb_policy" {
+      [32m+[0m [0m[1m[0mcookie_expiration_period[0m[0m = 600
+      [32m+[0m [0m[1m[0mid[0m[0m                       = (known after apply)
+      [32m+[0m [0m[1m[0mlb_port[0m[0m                  = 80
+      [32m+[0m [0m[1m[0mload_balancer[0m[0m            = (known after apply)
+      [32m+[0m [0m[1m[0mname[0m[0m                     = "mw-lb-policy"
+    }
+
+[1m  # module.network.aws_internet_gateway.mw_igw[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_internet_gateway" "mw_igw" {
+      [32m+[0m [0m[1m[0marn[0m[0m      = (known after apply)
+      [32m+[0m [0m[1m[0mid[0m[0m       = (known after apply)
+      [32m+[0m [0m[1m[0mowner_id[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0mtags[0m[0m     = {
+          [32m+[0m [0m"Name"    = "mediawiki"
+          [32m+[0m [0m"Project" = "mediawiki"
+        }
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m   = (known after apply)
+    }
+
+[1m  # module.network.aws_route_table.mw_rt_private[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_route_table" "mw_rt_private" {
+      [32m+[0m [0m[1m[0mid[0m[0m               = (known after apply)
+      [32m+[0m [0m[1m[0mowner_id[0m[0m         = (known after apply)
+      [32m+[0m [0m[1m[0mpropagating_vgws[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0mroute[0m[0m            = (known after apply)
+      [32m+[0m [0m[1m[0mtags[0m[0m             = {
+          [32m+[0m [0m"Name"    = "mediawiki_rt_private"
+          [32m+[0m [0m"Project" = "mediawiki"
+        }
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m           = (known after apply)
+    }
+
+[1m  # module.network.aws_route_table.mw_rt_public[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_route_table" "mw_rt_public" {
+      [32m+[0m [0m[1m[0mid[0m[0m               = (known after apply)
+      [32m+[0m [0m[1m[0mowner_id[0m[0m         = (known after apply)
+      [32m+[0m [0m[1m[0mpropagating_vgws[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0mroute[0m[0m            = [
+          [32m+[0m [0m{
+              [32m+[0m [0mcidr_block                = "0.0.0.0/0"
+              [32m+[0m [0megress_only_gateway_id    = ""
+              [32m+[0m [0mgateway_id                = (known after apply)
+              [32m+[0m [0minstance_id               = ""
+              [32m+[0m [0mipv6_cidr_block           = ""
+              [32m+[0m [0mlocal_gateway_id          = ""
+              [32m+[0m [0mnat_gateway_id            = ""
+              [32m+[0m [0mnetwork_interface_id      = ""
+              [32m+[0m [0mtransit_gateway_id        = ""
+              [32m+[0m [0mvpc_endpoint_id           = ""
+              [32m+[0m [0mvpc_peering_connection_id = ""
+            },
+        ]
+      [32m+[0m [0m[1m[0mtags[0m[0m             = {
+          [32m+[0m [0m"Name"    = "mediawiki_rt_public"
+          [32m+[0m [0m"Project" = "mediawiki"
+        }
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m           = (known after apply)
+    }
+
+[1m  # module.network.aws_route_table_association.mw_rta_private_a[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_route_table_association" "mw_rta_private_a" {
+      [32m+[0m [0m[1m[0mid[0m[0m             = (known after apply)
+      [32m+[0m [0m[1m[0mroute_table_id[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0msubnet_id[0m[0m      = (known after apply)
+    }
+
+[1m  # module.network.aws_route_table_association.mw_rta_private_b[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_route_table_association" "mw_rta_private_b" {
+      [32m+[0m [0m[1m[0mid[0m[0m             = (known after apply)
+      [32m+[0m [0m[1m[0mroute_table_id[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0msubnet_id[0m[0m      = (known after apply)
+    }
+
+[1m  # module.network.aws_route_table_association.mw_rta_public_a[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_route_table_association" "mw_rta_public_a" {
+      [32m+[0m [0m[1m[0mid[0m[0m             = (known after apply)
+      [32m+[0m [0m[1m[0mroute_table_id[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0msubnet_id[0m[0m      = (known after apply)
+    }
+
+[1m  # module.network.aws_route_table_association.mw_rta_public_b[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_route_table_association" "mw_rta_public_b" {
+      [32m+[0m [0m[1m[0mid[0m[0m             = (known after apply)
+      [32m+[0m [0m[1m[0mroute_table_id[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0msubnet_id[0m[0m      = (known after apply)
+    }
+
+[1m  # module.network.aws_security_group.mw_sg_private[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_security_group" "mw_sg_private" {
+      [32m+[0m [0m[1m[0marn[0m[0m                    = (known after apply)
+      [32m+[0m [0m[1m[0mdescription[0m[0m            = "default access to instances over 22 and 3306"
+      [32m+[0m [0m[1m[0megress[0m[0m                 = [
+          [32m+[0m [0m{
+              [32m+[0m [0mcidr_blocks      = [
+                  [32m+[0m [0m"0.0.0.0/0",
+                ]
+              [32m+[0m [0mdescription      = ""
+              [32m+[0m [0mfrom_port        = 0
+              [32m+[0m [0mipv6_cidr_blocks = []
+              [32m+[0m [0mprefix_list_ids  = []
+              [32m+[0m [0mprotocol         = "-1"
+              [32m+[0m [0msecurity_groups  = []
+              [32m+[0m [0mself             = false
+              [32m+[0m [0mto_port          = 0
+            },
+        ]
+      [32m+[0m [0m[1m[0mid[0m[0m                     = (known after apply)
+      [32m+[0m [0m[1m[0mingress[0m[0m                = [
+          [32m+[0m [0m{
+              [32m+[0m [0mcidr_blocks      = [
+                  [32m+[0m [0m"0.0.0.0/0",
+                ]
+              [32m+[0m [0mdescription      = ""
+              [32m+[0m [0mfrom_port        = 22
+              [32m+[0m [0mipv6_cidr_blocks = []
+              [32m+[0m [0mprefix_list_ids  = []
+              [32m+[0m [0mprotocol         = "tcp"
+              [32m+[0m [0msecurity_groups  = []
+              [32m+[0m [0mself             = false
+              [32m+[0m [0mto_port          = 22
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0mcidr_blocks      = [
+                  [32m+[0m [0m"0.0.0.0/0",
+                ]
+              [32m+[0m [0mdescription      = ""
+              [32m+[0m [0mfrom_port        = 3306
+              [32m+[0m [0mipv6_cidr_blocks = []
+              [32m+[0m [0mprefix_list_ids  = []
+              [32m+[0m [0mprotocol         = "tcp"
+              [32m+[0m [0msecurity_groups  = []
+              [32m+[0m [0mself             = false
+              [32m+[0m [0mto_port          = 3306
+            },
+        ]
+      [32m+[0m [0m[1m[0mname[0m[0m                   = "database_access"
+      [32m+[0m [0m[1m[0mname_prefix[0m[0m            = (known after apply)
+      [32m+[0m [0m[1m[0mowner_id[0m[0m               = (known after apply)
+      [32m+[0m [0m[1m[0mrevoke_rules_on_delete[0m[0m = false
+      [32m+[0m [0m[1m[0mtags[0m[0m                   = {
+          [32m+[0m [0m"Name"    = "mediawiki_sg_private"
+          [32m+[0m [0m"Project" = "mediawiki"
+        }
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m                 = (known after apply)
+    }
+
+[1m  # module.network.aws_security_group.mw_sg_public[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_security_group" "mw_sg_public" {
+      [32m+[0m [0m[1m[0marn[0m[0m                    = (known after apply)
+      [32m+[0m [0m[1m[0mdescription[0m[0m            = "default access to instances over 80 and 22"
+      [32m+[0m [0m[1m[0megress[0m[0m                 = [
+          [32m+[0m [0m{
+              [32m+[0m [0mcidr_blocks      = [
+                  [32m+[0m [0m"0.0.0.0/0",
+                ]
+              [32m+[0m [0mdescription      = ""
+              [32m+[0m [0mfrom_port        = 0
+              [32m+[0m [0mipv6_cidr_blocks = []
+              [32m+[0m [0mprefix_list_ids  = []
+              [32m+[0m [0mprotocol         = "-1"
+              [32m+[0m [0msecurity_groups  = []
+              [32m+[0m [0mself             = false
+              [32m+[0m [0mto_port          = 0
+            },
+        ]
+      [32m+[0m [0m[1m[0mid[0m[0m                     = (known after apply)
+      [32m+[0m [0m[1m[0mingress[0m[0m                = [
+          [32m+[0m [0m{
+              [32m+[0m [0mcidr_blocks      = [
+                  [32m+[0m [0m"0.0.0.0/0",
+                ]
+              [32m+[0m [0mdescription      = ""
+              [32m+[0m [0mfrom_port        = 22
+              [32m+[0m [0mipv6_cidr_blocks = []
+              [32m+[0m [0mprefix_list_ids  = []
+              [32m+[0m [0mprotocol         = "tcp"
+              [32m+[0m [0msecurity_groups  = []
+              [32m+[0m [0mself             = false
+              [32m+[0m [0mto_port          = 22
+            },
+          [32m+[0m [0m{
+              [32m+[0m [0mcidr_blocks      = [
+                  [32m+[0m [0m"0.0.0.0/0",
+                ]
+              [32m+[0m [0mdescription      = ""
+              [32m+[0m [0mfrom_port        = 80
+              [32m+[0m [0mipv6_cidr_blocks = []
+              [32m+[0m [0mprefix_list_ids  = []
+              [32m+[0m [0mprotocol         = "tcp"
+              [32m+[0m [0msecurity_groups  = []
+              [32m+[0m [0mself             = false
+              [32m+[0m [0mto_port          = 80
+            },
+        ]
+      [32m+[0m [0m[1m[0mname[0m[0m                   = "web_access"
+      [32m+[0m [0m[1m[0mname_prefix[0m[0m            = (known after apply)
+      [32m+[0m [0m[1m[0mowner_id[0m[0m               = (known after apply)
+      [32m+[0m [0m[1m[0mrevoke_rules_on_delete[0m[0m = false
+      [32m+[0m [0m[1m[0mtags[0m[0m                   = {
+          [32m+[0m [0m"Name"    = "mediawiki_sg_public"
+          [32m+[0m [0m"Project" = "mediawiki"
+        }
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m                 = (known after apply)
+    }
+
+[1m  # module.network.aws_subnet.mw_sub_private_a[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_subnet" "mw_sub_private_a" {
+      [32m+[0m [0m[1m[0marn[0m[0m                             = (known after apply)
+      [32m+[0m [0m[1m[0massign_ipv6_address_on_creation[0m[0m = false
+      [32m+[0m [0m[1m[0mavailability_zone[0m[0m               = "us-east-1a"
+      [32m+[0m [0m[1m[0mavailability_zone_id[0m[0m            = (known after apply)
+      [32m+[0m [0m[1m[0mcidr_block[0m[0m                      = "192.168.2.0/24"
+      [32m+[0m [0m[1m[0mid[0m[0m                              = (known after apply)
+      [32m+[0m [0m[1m[0mipv6_cidr_block_association_id[0m[0m  = (known after apply)
+      [32m+[0m [0m[1m[0mmap_public_ip_on_launch[0m[0m         = false
+      [32m+[0m [0m[1m[0mowner_id[0m[0m                        = (known after apply)
+      [32m+[0m [0m[1m[0mtags[0m[0m                            = {
+          [32m+[0m [0m"Name"    = "mediawiki_sub_private_a"
+          [32m+[0m [0m"Project" = "mediawiki"
+        }
+      [32m+[0m [0m[1m[0mtags_all[0m[0m                        = {
+          [32m+[0m [0m"Name"    = "mediawiki_sub_private_a"
+          [32m+[0m [0m"Project" = "mediawiki"
+        }
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m                          = (known after apply)
+    }
+
+[1m  # module.network.aws_subnet.mw_sub_private_b[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_subnet" "mw_sub_private_b" {
+      [32m+[0m [0m[1m[0marn[0m[0m                             = (known after apply)
+      [32m+[0m [0m[1m[0massign_ipv6_address_on_creation[0m[0m = false
+      [32m+[0m [0m[1m[0mavailability_zone[0m[0m               = "us-east-1b"
+      [32m+[0m [0m[1m[0mavailability_zone_id[0m[0m            = (known after apply)
+      [32m+[0m [0m[1m[0mcidr_block[0m[0m                      = "192.168.3.0/24"
+      [32m+[0m [0m[1m[0mid[0m[0m                              = (known after apply)
+      [32m+[0m [0m[1m[0mipv6_cidr_block_association_id[0m[0m  = (known after apply)
+      [32m+[0m [0m[1m[0mmap_public_ip_on_launch[0m[0m         = false
+      [32m+[0m [0m[1m[0mowner_id[0m[0m                        = (known after apply)
+      [32m+[0m [0m[1m[0mtags[0m[0m                            = {
+          [32m+[0m [0m"Name"    = "mediawiki_private_b"
+          [32m+[0m [0m"Project" = "mediawiki"
+        }
+      [32m+[0m [0m[1m[0mtags_all[0m[0m                        = {
+          [32m+[0m [0m"Name"    = "mediawiki_private_b"
+          [32m+[0m [0m"Project" = "mediawiki"
+        }
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m                          = (known after apply)
+    }
+
+[1m  # module.network.aws_subnet.mw_sub_public_a[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_subnet" "mw_sub_public_a" {
+      [32m+[0m [0m[1m[0marn[0m[0m                             = (known after apply)
+      [32m+[0m [0m[1m[0massign_ipv6_address_on_creation[0m[0m = false
+      [32m+[0m [0m[1m[0mavailability_zone[0m[0m               = "us-east-1a"
+      [32m+[0m [0m[1m[0mavailability_zone_id[0m[0m            = (known after apply)
+      [32m+[0m [0m[1m[0mcidr_block[0m[0m                      = "192.168.0.0/24"
+      [32m+[0m [0m[1m[0mid[0m[0m                              = (known after apply)
+      [32m+[0m [0m[1m[0mipv6_cidr_block_association_id[0m[0m  = (known after apply)
+      [32m+[0m [0m[1m[0mmap_public_ip_on_launch[0m[0m         = true
+      [32m+[0m [0m[1m[0mowner_id[0m[0m                        = (known after apply)
+      [32m+[0m [0m[1m[0mtags[0m[0m                            = {
+          [32m+[0m [0m"Name"    = "mediawiki_sub_public_a"
+          [32m+[0m [0m"Project" = "mediawiki"
+        }
+      [32m+[0m [0m[1m[0mtags_all[0m[0m                        = {
+          [32m+[0m [0m"Name"    = "mediawiki_sub_public_a"
+          [32m+[0m [0m"Project" = "mediawiki"
+        }
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m                          = (known after apply)
+    }
+
+[1m  # module.network.aws_subnet.mw_sub_public_b[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_subnet" "mw_sub_public_b" {
+      [32m+[0m [0m[1m[0marn[0m[0m                             = (known after apply)
+      [32m+[0m [0m[1m[0massign_ipv6_address_on_creation[0m[0m = false
+      [32m+[0m [0m[1m[0mavailability_zone[0m[0m               = "us-east-1b"
+      [32m+[0m [0m[1m[0mavailability_zone_id[0m[0m            = (known after apply)
+      [32m+[0m [0m[1m[0mcidr_block[0m[0m                      = "192.168.1.0/24"
+      [32m+[0m [0m[1m[0mid[0m[0m                              = (known after apply)
+      [32m+[0m [0m[1m[0mipv6_cidr_block_association_id[0m[0m  = (known after apply)
+      [32m+[0m [0m[1m[0mmap_public_ip_on_launch[0m[0m         = true
+      [32m+[0m [0m[1m[0mowner_id[0m[0m                        = (known after apply)
+      [32m+[0m [0m[1m[0mtags[0m[0m                            = {
+          [32m+[0m [0m"Name"    = "mediawiki_sub_public_b"
+          [32m+[0m [0m"Project" = "mediawiki"
+        }
+      [32m+[0m [0m[1m[0mtags_all[0m[0m                        = {
+          [32m+[0m [0m"Name"    = "mediawiki_sub_public_b"
+          [32m+[0m [0m"Project" = "mediawiki"
+        }
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m                          = (known after apply)
+    }
+
+[1m  # module.network.aws_vpc.mw_vpc[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_vpc" "mw_vpc" {
+      [32m+[0m [0m[1m[0marn[0m[0m                              = (known after apply)
+      [32m+[0m [0m[1m[0massign_generated_ipv6_cidr_block[0m[0m = false
+      [32m+[0m [0m[1m[0mcidr_block[0m[0m                       = "192.168.0.0/16"
+      [32m+[0m [0m[1m[0mdefault_network_acl_id[0m[0m           = (known after apply)
+      [32m+[0m [0m[1m[0mdefault_route_table_id[0m[0m           = (known after apply)
+      [32m+[0m [0m[1m[0mdefault_security_group_id[0m[0m        = (known after apply)
+      [32m+[0m [0m[1m[0mdhcp_options_id[0m[0m                  = (known after apply)
+      [32m+[0m [0m[1m[0menable_classiclink[0m[0m               = (known after apply)
+      [32m+[0m [0m[1m[0menable_classiclink_dns_support[0m[0m   = (known after apply)
+      [32m+[0m [0m[1m[0menable_dns_hostnames[0m[0m             = (known after apply)
+      [32m+[0m [0m[1m[0menable_dns_support[0m[0m               = true
+      [32m+[0m [0m[1m[0mid[0m[0m                               = (known after apply)
+      [32m+[0m [0m[1m[0minstance_tenancy[0m[0m                 = "default"
+      [32m+[0m [0m[1m[0mipv6_association_id[0m[0m              = (known after apply)
+      [32m+[0m [0m[1m[0mipv6_cidr_block[0m[0m                  = (known after apply)
+      [32m+[0m [0m[1m[0mmain_route_table_id[0m[0m              = (known after apply)
+      [32m+[0m [0m[1m[0mowner_id[0m[0m                         = (known after apply)
+      [32m+[0m [0m[1m[0mtags[0m[0m                             = {
+          [32m+[0m [0m"Name"    = "mediawiki"
+          [32m+[0m [0m"Project" = "mediawiki"
+        }
+      [32m+[0m [0m[1m[0mtags_all[0m[0m                         = {
+          [32m+[0m [0m"Name"    = "mediawiki"
+          [32m+[0m [0m"Project" = "mediawiki"
+        }
+    }
+
+[0m[1mPlan:[0m 20 to add, 0 to change, 0 to destroy.[0m
+
+------------------------------------------------------------------------
+
+Note: You didn't specify an "-out" parameter to save this plan, so Terraform
+can't guarantee that exactly these actions will be performed if
+"terraform apply" is subsequently run.
+

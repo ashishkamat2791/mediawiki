@@ -1,0 +1,70 @@
+- hosts: apache-servers
+  become: yes
+  become_user: root
+  become_method: sudo
+  #remote_user: ubuntu
+  handlers:
+   - name: restart apache
+     service:
+      name: apache2
+      state: restarted
+   - name: clean-up mediawiki zip
+     file:
+       path: "/tmp/mediawiki-1.35.1.tar.gz"
+       state: absent
+
+  tasks:
+  - name: apt update and upgrade
+    shell: apt -y update && apt -y upgrade 
+  - name: install apt packages for mediawiki
+    apt:
+      name: "{{ apt_packages }}"
+      state: present
+      update_cache: yes
+    vars:
+        apt_packages:
+         - python3
+         - apache2
+         - php
+         - php-mysql
+         - libapache2-mod-php
+         - php-xml
+         - php-mbstring
+         - php-apcu
+         - php-intl
+         - imagemagick
+         - inkscape
+         - php-gd
+         - php-cli
+         - php-curl
+    
+  - name: download mediawiki
+    get_url:
+      url: https://releases.wikimedia.org/mediawiki/1.35/mediawiki-1.35.1.tar.gz
+      dest: /tmp/mediawiki-1.35.1.tar.gz
+  - name: unzip mediawiki
+    unarchive:
+      src: /tmp/mediawiki-1.35.1.tar.gz
+      dest: /tmp
+      remote_src: yes
+
+  # - name: move mediawiki zip
+  #   shell: mv -u /tmp/mediawiki-1.35.1 /var/lib/mediawiki
+
+  - name: Create symbolic link
+    file:
+     dest: "/var/www/html/mediawiki"
+     src: "/var/lib/mediawiki"
+     state: link
+     force: yes
+
+#- name: transform localsettings.php template
+#  template:
+#    dest: /var/lib/mediawiki/LocalSettings.php
+#    src: LocalSettings.php.j2
+
+  - name: enable php mods
+    shell: sudo phpenmod mbstring && sudo phpenmod xml
+    notify:
+      - clean-up mediawiki zip
+      - restart apache

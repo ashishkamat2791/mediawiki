@@ -1,0 +1,8 @@
+ami                 = "ami-042e8287309f5df03"
+key_name            = "mediawiki"
+public_key_path     = "mediawiki.pub"
+private_key_path     = "mediawiki"
+web_instance_type   = "t2.micro"
+db_instance_type    = "t2.micro"
+aws_profile         = "mediawiki"
+db_root_password    = "root@123"
