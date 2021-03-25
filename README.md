@@ -75,10 +75,25 @@ For any questions, please write to me at ashishkamat91[at].gmail.com
 **2. Setup instruction**
 ![Launch screen 2](static/screenshot2.png)
 
+**3. Database setup**
+![Launch screen 3](static/screenshot33.png)
+
+**4.wiki installation**
+![Launch screen 4](static/screenshot4.png)
+
+**5.wiki installation in progress**
+![Launch screen 5](static/screenshot9.png)
+
+**6.wiki installation complete**
+![Launch screen 6](static/screenshot10.png)
+
+**7.Landing Page**
+![Launch screen 6](static/final.png)
+
 
 ## issues faced
 1. username needs to be provided while execuitng playbook and keyfile (can be handled using group_vars)
-2. db_instance in private subnet so have to excute ansible-playbook on that host via jumphost i.e any of the web-server
-3. media-wiki 1.35.1 require php7 or later which is available  in Ubuntu 20
-4. DB instance creation stuck couple of times due to unable to update cache (unknown reason) .. work in progress
+2. db_instance in private subnet so have to excute ansible-playbook on that host via jumphost i.e any of the web-server -- fixed
+3. media-wiki 1.35.1 require php7 or later which is available  in Ubuntu 20 --- fixed
+4. DB instance creation stuck couple of times due to unable to update cache (unknown reason) .. work in progress -- fixed
 
