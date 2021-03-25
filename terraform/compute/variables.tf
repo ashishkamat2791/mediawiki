@@ -23,9 +23,7 @@ variable "db_instance_type" {
 variable "db_security_group" {
 }
 
-variable "db_root_password" {
-  
-}
+
 variable "db_password" {
   default="mediawiki@123"
 }

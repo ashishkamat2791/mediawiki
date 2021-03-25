@@ -1,115 +1,225 @@
-variable "aws_vpc_id" {
-  description = "specify VPC ID for rds instance creation"
-}
-
-variable "private_subnet_ids" {
+variable "project" {
   default     = ""
-  description = "specify subnet ids for RDS instance creation"
+  type        = string
+  description = "This variable is used for tagging"
 }
 
-variable "deployment_environment" {
-  description = "specify enviornment name"
+variable "allocated_storage" {
+  default     = 32
+  type        = number
+  description = "Storage allocated to database instance"
 }
 
-variable "db_identifier" {
-  description = "specify DB identifier class"
+variable "max_allocated_storage" {
+  default     = null
+  type        = number
+  description = "Specify Max Storage allocation which should be higher than allocated_storage for storage autoscaling"
 }
 
-variable "db_allocated_storage" {
-  default     = 30
-  description = "specify db storage allocation"
+variable "engine_version" {
+  default     = "10.9"
+  type        = string
+  description = "Database engine version"
 }
 
-variable "db_engine" {
-  description = "specify DB_engine to be used"
+variable "instance_type" {
+  default     = "db.t3.micro"
+  type        = string
+  description = "Instance type for database instance"
 }
 
-variable "db_engine_version" {
-  description = "specify DB engine version"
-}
-
-variable "db_port" {
-  description = "specify DB port to be used"
-}
-
-variable "db_username" {
-  description = "specify DB username"
-}
-
-variable "db_password" {
-  description = "specify DB password"
-}
-
-variable "instance_class" {
-  description = "specify type of instacne class to be used"
-}
-
-variable "db_storage_type" {
+variable "storage_type" {
   default     = "gp2"
-  description = "type of storage type to be used"
+  type        = string
+  description = "Type of underlying storage for database"
 }
 
-variable "db_name" {
-  description = "DB name to be given"
+variable "iops" {
+  default     = 0
+  type        = number
+  description = "The amount of provisioned IOPS"
 }
 
-variable "auto_mirror" {
-  default     = "false"
-  description = "If mirroring to be enabled"
+variable "vpc_id" {
+  type        = string
+  description = "ID of VPC meant to house database"
+}
+
+variable "vpc_security_group_ids" {
+  type        = list
+  description = "security group ids to pass"
+}
+
+variable "database_identifier" {
+  type        = string
+  description = "Identifier for RDS instance"
+}
+
+variable "snapshot_identifier" {
+  default     = ""
+  type        = string
+  description = "The name of the snapshot (if any) the database should be created from"
+}
+
+variable "database_name" {
+  type        = string
+  description = "Name of database inside storage engine"
+}
+
+variable "database_username" {
+  type        = string
+  description = "Name of user inside storage engine"
+}
+
+variable "database_password" {
+  type        = string
+  description = "Database password inside storage engine"
+}
+
+variable "database_port" {
+  default     = 3306
+  type        = number
+  description = "Port on which database will accept connections"
 }
 
 variable "backup_retention_period" {
   default     = 0
-  description = "period to keep backup of DB snapshot"
+  type        = number
+  description = "Number of days to keep database backups"
+}
+
+variable "backup_window" {
+  # 01:30AM-02:00AM IST
+  default     = "20:00-20:30"
+  type        = string
+  description = "30 minute time window to reserve for backups"
 }
 
 variable "maintenance_window" {
-  default     = ""
-  description = "maintenance window (in days)"
+  # SUN 03:30AM-04:30AM IST
+  default     = "sun:22:00-sun:23:00"
+  type        = string
+  description = "60 minute time window to reserve for maintenance"
 }
 
-variable "copy_tags_to_snapshot" {
-  default     = "true"
-  description = "whether to copy tags to snapshots"
+variable "apply_immediately" {
+  default     = true
+  type        = bool
+  description = "Specifies whether any modifications are applied immediately, or during the next maintenance window"
 }
 
-variable "deletion_protection" {
-  default     = "true"
-  description = "whether to delete snapshot and protection flag"
-}
-
-variable "iam_database_authentication_enabled" {
-  default     = "false"
-  description = "if IAM authentication to be enabled"
-}
-
-variable "multi_az" {
-  default     = "false"
-  description = "whether DB instacne should be multi AZ"
-}
-
-variable "performance_insights_enabled" {
-  default     = "false"
-  description = "whether performance insights to be enabled"
-}
-
-variable "publicly_accessible" {
-  default     = "false"
-  description = "whether DB to be accessible publicly"
-}
-
-variable "storage_encrypted" {
-  default     = "false"
-  description = "whether storage to be encrypted"
+variable "auto_minor_version_upgrade" {
+  default     = true
+  type        = bool
+  description = "Minor engine upgrades are applied automatically to the DB instance during the maintenance window"
 }
 
 variable "skip_final_snapshot" {
-  default     = "false"
-  description = "whether final snapshot to be taken before DB deletion"
+  default     = true
+  type        = bool
+  description = "Flag to enable or disable a snapshot if the database instance is terminated"
+}
+
+variable "copy_tags_to_snapshot" {
+  default     = false
+  type        = bool
+  description = "Flag to enable or disable copying instance tags to the final snapshot"
+}
+
+variable "multi_availability_zone" {
+  default     = false
+  type        = bool
+  description = "Flag to enable hot standby in another availability zone"
+}
+
+variable "storage_encrypted" {
+  default     = false
+  type        = bool
+  description = "Flag to enable storage encryption"
+}
+
+variable "monitoring_interval" {
+  default     = 0
+  type        = number
+  description = "The interval, in seconds, between points when Enhanced Monitoring metrics are collected"
+}
+
+variable "deletion_protection" {
+  default     = true
+  type        = bool
+  description = "Flag to protect the database instance from deletion"
+}
+
+variable "cloudwatch_logs_exports" {
+  default     = []
+  type        = list
+  description = "Possible log-group exporters are postgresql,upgrade"
+}
+
+variable "db_vpc_subnets" {
+  type        = list
+  description = "Database vpc subnets"
+  default     = []
+}
+
+variable "parameter_group" {
+  default     = "default.postgres12"
+  type        = string
+  description = "Database engine parameter group"
+}
+
+variable "alarm_cpu_threshold" {
+  default     = 75
+  type        = number
+  description = "CPU alarm threshold as a percentage"
+}
+
+variable "alarm_disk_queue_threshold" {
+  default     = 10
+  type        = number
+  description = "Disk queue alarm threshold"
+}
+
+variable "alarm_free_disk_threshold" {
+  # 5GB
+  default     = 5000000000
+  type        = number
+  description = "Free disk alarm threshold in bytes"
+}
+
+variable "alarm_free_memory_threshold" {
+  # 128MB
+  default     = 128000000
+  type        = number
+  description = "Free memory alarm threshold in bytes"
+}
+
+variable "alarm_cpu_credit_balance_threshold" {
+  default     = 30
+  type        = number
+  description = "CPU credit balance threshold (only for db.t* instance types)"
+}
+
+variable "alarm_actions" {
+  type        = list
+  description = "List of ARNs to be notified via CloudWatch when alarm enters ALARM state"
+  default     = []
+}
+
+variable "ok_actions" {
+  type        = list
+  description = "List of ARNs to be notified via CloudWatch when alarm enters OK state"
+  default     = []
+}
+
+variable "insufficient_data_actions" {
+  type        = list
+  description = "List of ARNs to be notified via CloudWatch when alarm enters INSUFFICIENT_DATA state"
+  default     = []
 }
 
 variable "tags" {
-  description = "A map of tags to add to all resources."
-  type        = map(string)
   default     = {}
+  type        = map(string)
+  description = "tags to attach to the RDS resources"
 }

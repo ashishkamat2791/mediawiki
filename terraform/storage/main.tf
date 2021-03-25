@@ -1,60 +1,39 @@
-resource "aws_db_instance" "default" {
-  identifier                          = var.db_identifier
-  allocated_storage                   = var.db_allocated_storage
-  storage_type                        = var.db_storage_type
-  engine                              = var.db_engine
-  engine_version                      = var.db_engine_version
-  instance_class                      = var.instance_class
-  name                                = var.db_name
-  username                            = var.db_username
-  password                            = var.db_password
-  port                                = var.db_port
-  parameter_group_name                = "default.mysql5.7"
-  auto_minor_version_upgrade          = var.auto_mirror
-  backup_retention_period             = var.backup_retention_period
-  maintenance_window                  = var.maintenance_window
-  copy_tags_to_snapshot               = var.copy_tags_to_snapshot
-  db_subnet_group_name                = aws_db_subnet_group.default_subnet_group.name
-  deletion_protection                 = var.deletion_protection
-  iam_database_authentication_enabled = var.iam_database_authentication_enabled
-  multi_az                            = var.multi_az
-  performance_insights_enabled        = var.performance_insights_enabled
-  publicly_accessible                 = var.publicly_accessible
-  storage_encrypted                   = var.storage_encrypted
-  vpc_security_group_ids              = [aws_security_group.aws_rds_security_group.id]
-  skip_final_snapshot                 = var.skip_final_snapshot
-  depends_on                          = ["aws_security_group.aws_rds_security_group", "aws_db_subnet_group.default_subnet_group"]
-  tags                                = var.tags
+resource "aws_db_instance" "mysql" {
+  allocated_storage               = var.allocated_storage
+  max_allocated_storage           = var.max_allocated_storage != null ? var.max_allocated_storage : null
+  engine                          = "mysql"
+  engine_version                  = var.engine_version
+  identifier                      = var.database_identifier
+  snapshot_identifier             = var.snapshot_identifier
+  instance_class                  = var.instance_type
+  storage_type                    = var.storage_type
+  iops                            = var.iops
+  name                            = var.database_name
+  password                        = var.database_password
+  username                        = var.database_username
+  backup_retention_period         = var.backup_retention_period
+  backup_window                   = var.backup_window
+  maintenance_window              = var.maintenance_window
+  auto_minor_version_upgrade      = var.auto_minor_version_upgrade
+  final_snapshot_identifier       = "${var.database_identifier}-final-snapshot"
+  skip_final_snapshot             = var.skip_final_snapshot
+  copy_tags_to_snapshot           = var.copy_tags_to_snapshot
+  multi_az                        = var.multi_availability_zone
+  port                            = var.database_port
+  vpc_security_group_ids          = var.vpc_security_group_ids
+  db_subnet_group_name            = aws_db_subnet_group.mysql.name
+  parameter_group_name            = var.parameter_group
+  storage_encrypted               = var.storage_encrypted
+  monitoring_interval             = var.monitoring_interval
+  deletion_protection             = var.deletion_protection
+  enabled_cloudwatch_logs_exports = var.cloudwatch_logs_exports
+  apply_immediately               = var.apply_immediately
+  tags                            = var.tags
+  depends_on                      = [aws_db_subnet_group.mysql]
 }
 
-resource "aws_security_group" "aws_rds_security_group" {
-  name        = "RDS SG ${var.deployment_environment}"
-  description = "Ingress/Egress rules for ec2 servers"
-  vpc_id      = var.aws_vpc_id
-
-  lifecycle {
-    create_before_destroy = true
-  }
-
-  ingress {
-    from_port   = 3306
-    to_port     = 3306
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/8"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = "${var.tags}"
-}
-
-resource "aws_db_subnet_group" "default_subnet_group" {
-  name       = "${var.db_identifier}-db_subnet_group"
-  subnet_ids = split(",", var.private_subnet_ids)
+resource "aws_db_subnet_group" "mysql" {
+  name       = "${var.database_identifier}-subnetgrp"
+  subnet_ids = var.db_vpc_subnets
   tags       = var.tags
 }

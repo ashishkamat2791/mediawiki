@@ -59,18 +59,24 @@ resource "aws_instance" "mw_instance_web_b" {
   }
 }
 
-resource "aws_instance" "mw_instance_db" {
-  ami                    = var.ami
-  instance_type          = var.web_instance_type
-  key_name               = aws_key_pair.mw_key_pair.id
-  vpc_security_group_ids = [var.db_security_group]
-  subnet_id              = var.db_subnet
+# data "template_file" "user_data" {
+#   template = "${file("${path.module}/files/user-data.sh")}"
+# }
 
-  tags = {
-    Name    = "mw_instance_db"
-    Project = "mediawiki"
-  }
-}
+# resource "aws_instance" "mw_instance_db" {
+#   ami                    = var.ami
+#   instance_type          = var.web_instance_type
+#   key_name               = aws_key_pair.mw_key_pair.id
+#   vpc_security_group_ids = [var.db_security_group]
+#   subnet_id              = var.db_subnet
+#   user_data              = data.template_file.user_data.rendered
+		           
+
+#   tags = {
+#     Name    = "mw_instance_db"
+#     Project = "mediawiki"
+#   }
+# }
 
 #-------------- ELB --------------#
 resource "aws_elb" "mw_elb" {
@@ -88,20 +94,7 @@ dev-mediawiki-web-2 ansible_host=${aws_instance.mw_instance_web_b.public_ip}
 
 [dev-mediawiki-web:vars]
 lb_url=${aws_elb.mw_elb.dns_name}
-database_ip=${aws_instance.mw_instance_db.private_ip}
-
-[dev-mediawiki-sql]
-dev-mediawiki-sql-1 ansible_host=${aws_instance.mw_instance_db.private_ip}
-
-[dev-mediawiki-sql:vars]
-web1=${aws_instance.mw_instance_web_a.private_ip}
-web2=${aws_instance.mw_instance_web_b.private_ip}
-mysql_root_password=${var.db_root_password}
 mediawiki_password=${var.db_password}
-
-[mysql-servers:children]
-dev-mediawiki-sql
-
 [apache-servers:children]
 dev-mediawiki-web
 
@@ -120,19 +113,19 @@ EOD
              EOF
   }
  # back-end
-      provisioner "local-exec" {
-    command = <<EOF
-              ANSIBLE_HOST_KEY_CHECKING=False \
-              ansible-playbook \
-              -i ../aws_hosts \
-              --ssh-common-args ' \
-              -o ProxyCommand="ssh -A -W %h:%p -q ubuntu@${aws_instance.mw_instance_web_a.public_ip} \
-                   -i ${var.private_key_path}"' \
-              -u ubuntu \
-              --private-key ${var.private_key_path}  \
-              ../ansible_templates/mysql.yaml
-             EOF
-  }
+  #     provisioner "local-exec" {
+  #   command = <<EOF
+  #             ANSIBLE_HOST_KEY_CHECKING=False \
+  #             ansible-playbook \
+  #             -i ../aws_hosts \
+  #             --ssh-common-args ' \
+  #             -o ProxyCommand="ssh -A -W %h:%p -q ubuntu@${aws_instance.mw_instance_web_a.public_ip} \
+  #                  -i ${var.private_key_path}"' \
+  #             -u ubuntu \
+  #             --private-key ${var.private_key_path}  \
+  #             ../ansible_templates/mysql.yaml
+  #            EOF
+  # }
 
   listener {
     instance_port     = 80

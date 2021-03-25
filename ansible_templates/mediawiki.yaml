@@ -48,8 +48,8 @@
       dest: /tmp
       remote_src: yes
 
-  # - name: move mediawiki zip
-  #   shell: mv -u /tmp/mediawiki-1.35.1 /var/lib/mediawiki
+  - name: move mediawiki zip
+    shell: mv -u /tmp/mediawiki-1.35.1 /var/lib/mediawiki
 
   - name: Create symbolic link
     file:
@@ -58,10 +58,10 @@
      state: link
      force: yes
 
-#- name: transform localsettings.php template
-#  template:
-#    dest: /var/lib/mediawiki/LocalSettings.php
-#    src: LocalSettings.php.j2
+  # - name: transform localsettings.php template
+  #   template:
+  #     dest: /var/lib/mediawiki/LocalSettings.php
+  #     src: ../ansible_templates/LocalSettings.php.j2
 
   - name: enable php mods
     shell: sudo phpenmod mbstring && sudo phpenmod xml
